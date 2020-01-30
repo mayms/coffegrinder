@@ -25,3 +25,15 @@ difference() {
         }
     }
 }
+translate([t, t, 0]) {
+    cube(size=[t, y-2*t, 3*t], center=false);
+}
+translate([3*t, t, 0]) {
+    cube(size=[t, y-2*t, 3*t], center=false);
+}
+translate([x-t, t, 0]) {
+    cube(size=[t, y-2*t, 3*t], center=false);
+}
+translate([x-3*t, t, 0]) {
+    cube(size=[t, y-2*t, 3*t], center=false);
+}
