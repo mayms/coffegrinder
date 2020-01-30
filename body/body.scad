@@ -2,6 +2,7 @@ x=120;  // height
 y=90;   // width
 t=2;    // thickness
 
+// plate
 difference() {
     cube(size=[x, y, t], center=false);
     // upper bound
@@ -25,6 +26,8 @@ difference() {
         }
     }
 }
+
+// clips
 translate([t, t, 0]) {
     cube(size=[t, y-2*t, 3*t], center=false);
 }
