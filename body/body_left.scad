@@ -1,6 +1,7 @@
-x=120;  // height
-y=90;   // width
-t=2;    // thickness
+include <config.scad>
+
+x=height;
+y=width;
 
 // plate
 difference() {
@@ -28,15 +29,9 @@ difference() {
 }
 
 // clips
-translate([t, t, 0]) {
-    cube(size=[t, y-2*t, 3*t], center=false);
+translate([2*t, t, 0]) {
+    cube(size=[t, y-2*t, t+clipHeight], center=false);
 }
-translate([3*t, t, 0]) {
-    cube(size=[t, y-2*t, 3*t], center=false);
-}
-translate([x-t, t, 0]) {
-    cube(size=[t, y-2*t, 3*t], center=false);
-}
-translate([x-3*t, t, 0]) {
-    cube(size=[t, y-2*t, 3*t], center=false);
+translate([x-2*t-clipBottomOffset, t, 0]) {
+    cube(size=[t, y-2*t, t+clipHeight], center=false);
 }
