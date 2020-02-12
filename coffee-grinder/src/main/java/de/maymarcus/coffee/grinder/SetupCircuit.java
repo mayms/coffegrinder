@@ -15,33 +15,29 @@ import static com.pi4j.io.gpio.PinPullResistance.PULL_UP;
 import static com.pi4j.io.gpio.PinState.HIGH;
 import static com.pi4j.io.gpio.PinState.LOW;
 import static com.pi4j.io.gpio.RaspiPin.GPIO_02;
-import static com.pi4j.io.gpio.RaspiPin.GPIO_04;
+import static com.pi4j.io.gpio.RaspiPin.GPIO_03;
 import static org.slf4j.LoggerFactory.getLogger;
 
 @Component
-public class Bla {
+public class SetupCircuit {
 
-    private static final Logger LOG = getLogger(Bla.class);
+    private static final Logger LOG = getLogger(SetupCircuit.class);
     private final GpioController gpio;
 
-    public Bla() {
-        LOG.info("Bla created");
+    public SetupCircuit() {
+        LOG.info("Setting up circuit");
 
         gpio = GpioFactory.getInstance();
-        GpioPinDigitalOutput grinder = gpio.provisionDigitalOutputPin(GPIO_04, "grinder", LOW);
-        GpioPinDigitalInput button = gpio.provisionDigitalInputPin(GPIO_02, "button", PULL_UP);
-        button.setDebounce(300);
-        GpioPinListenerDigital buttonListener = (e) -> {
-            grinder.pulse(3000);
-        };
-        button.addListener(buttonListener);
 
+        GpioPinDigitalOutput grinder = gpio.provisionDigitalOutputPin(GPIO_02, "grinder", LOW);
         grinder.setShutdownOptions(true, LOW, PULL_DOWN, DIGITAL_OUTPUT);
-        button.setShutdownOptions(true, HIGH, PULL_UP, DIGITAL_INPUT);
-    }
 
-//    @PostConstruct
-//    public void init() {
-//        LOG.info("Bla.init");
-//    }
+        GpioPinDigitalInput button = gpio.provisionDigitalInputPin(GPIO_03, "button", PULL_UP);
+        button.setShutdownOptions(true, HIGH, PULL_UP, DIGITAL_INPUT);
+
+        button.setDebounce(300);
+        button.addListener((GpioPinListenerDigital) (e) -> {
+            grinder.pulse(3000);
+        });
+    }
 }
