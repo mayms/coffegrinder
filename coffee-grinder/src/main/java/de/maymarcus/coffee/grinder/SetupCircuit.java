@@ -14,8 +14,8 @@ import static com.pi4j.io.gpio.PinPullResistance.PULL_DOWN;
 import static com.pi4j.io.gpio.PinPullResistance.PULL_UP;
 import static com.pi4j.io.gpio.PinState.HIGH;
 import static com.pi4j.io.gpio.PinState.LOW;
-import static com.pi4j.io.gpio.RaspiPin.GPIO_02;
-import static com.pi4j.io.gpio.RaspiPin.GPIO_03;
+import static com.pi4j.io.gpio.RaspiPin.GPIO_08;
+import static com.pi4j.io.gpio.RaspiPin.GPIO_09;
 import static org.slf4j.LoggerFactory.getLogger;
 
 @Component
@@ -29,15 +29,17 @@ public class SetupCircuit {
 
         gpio = GpioFactory.getInstance();
 
-        GpioPinDigitalOutput grinder = gpio.provisionDigitalOutputPin(GPIO_02, "grinder", LOW);
+        GpioPinDigitalOutput grinder = gpio.provisionDigitalOutputPin(GPIO_08, "grinder", LOW);
         grinder.setShutdownOptions(true, LOW, PULL_DOWN, DIGITAL_OUTPUT);
 
-        GpioPinDigitalInput button = gpio.provisionDigitalInputPin(GPIO_03, "button", PULL_UP);
+        GpioPinDigitalInput button = gpio.provisionDigitalInputPin(GPIO_09, "button", PULL_UP);
         button.setShutdownOptions(true, HIGH, PULL_UP, DIGITAL_INPUT);
 
         button.setDebounce(300);
         button.addListener((GpioPinListenerDigital) (e) -> {
+            LOG.info("pulse start");
             grinder.pulse(3000);
+            LOG.info("pulse end");
         });
     }
 }
