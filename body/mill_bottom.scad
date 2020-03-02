@@ -2,19 +2,27 @@ $fn=50;
 
 t=5;    // thickness
 width=70;
-depth=60;
-heigth=50;
+depth=70;
+heigth=60;
 
-difference() {
-    translate([0, -10, 0]) {
-        cube(size=[width, depth + 20, t], center=false);
+rotate([0, -90, 0]) {
+    difference() {
+        translate([0, -10, 0]) {
+            cube(size=[width, depth + 20, t], center=false);
+        }
+        translate([10, -5, 0]) cylinder(d=3, h=10*t, center=true);
+        translate([width - 10, -5, 0]) cylinder(d=3, h=10*t, center=true);
+        translate([10, depth + 10 - 5, 0]) cylinder(d=3, h=10*t, center=true);
+        translate([width - 10, depth + 10 - 5, 0]) cylinder(d=3, h=10*t, center=true);
     }
-    translate([10, -5, 0]) cylinder(d=3, h=10*t, center=true);
-    translate([width - 10, -5, 0]) cylinder(d=3, h=10*t, center=true);
-    translate([10, depth + 10 - 5, 0]) cylinder(d=3, h=10*t, center=true);
-    translate([width - 10, depth + 10 - 5, 0]) cylinder(d=3, h=10*t, center=true);
-}
 
-cube(size=[width, t, heigth], center=false);
-translate([0, depth - t, 0]) cube(size=[width, t, heigth], center=false);
-cube(size=[t, depth, heigth], center=false);
+    difference() {
+        union() {
+            cube(size=[width, t, heigth], center=false);
+            translate([0, depth - t, 0]) cube(size=[width, t, heigth], center=false);
+        }
+        translate([2*t, -10, t + 2]) cube(size=[t, depth + 20, 3], center=false);
+        translate([width - 3*t, -10, t + 2]) cube(size=[t, depth + 20, 3], center=false);
+    }
+    cube(size=[t, depth, heigth], center=false);   
+}
