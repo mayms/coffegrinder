@@ -24,5 +24,9 @@ rotate([0, -90, 0]) {
         translate([2*t, -10, t + 2]) cube(size=[t, depth + 20, 3], center=false);
         translate([width - 3*t, -10, t + 2]) cube(size=[t, depth + 20, 3], center=false);
     }
-    cube(size=[t, depth, heigth], center=false);   
+    difference() {
+        cube(size=[t, depth, heigth], center=false);
+        translate([-t, 10, heigth / 2]) cube(size=[3*t, 10, 5], center=false);
+        translate([-t, width - 20, heigth / 2]) cube(size=[3*t, 10, 5], center=false);
+    }
 }
